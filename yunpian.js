@@ -12,7 +12,7 @@ YunPianAPI.prototype.SendTplSMS = function (mobile, tpl_id, tpl_value, callback)
     'tpl_value': qs.stringify(tpl_value),
   };
 
-  HTTP.post('https://sms.yunpian.com/v2/sms/tpl_single_send.json', { params: queryString }, function (error, result) {
+  HTTP.post('https://sms.yunpian.com/v2/sms/tpl_batch_send.json', { params: queryString }, function (error, result) {
     callback(error, result);
   });
 }
