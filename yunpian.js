@@ -1,4 +1,12 @@
-YunPianAPI.prototype.SendTplSMS = function (mobile, tpl_id, tpl_value, callback) {
+
+var setting = Meteor.settings.private.yunpian;
+if (!setting) {
+  console.log('error', 'Please Add yunpian setting.');
+}
+
+YunPianAPI = {};
+
+YunPianAPI.SendTplSMS = function (mobile, tpl_id, tpl_value, callback) {
   var qs = require('querystring'), util = require('util');
 
   if (util.isArray(mobile)) {
@@ -6,7 +14,7 @@ YunPianAPI.prototype.SendTplSMS = function (mobile, tpl_id, tpl_value, callback)
   }
 
   var queryString = {
-    'apikey': this.apikey,
+    'apikey': setting.apikey,
     'mobile': mobile,
     'tpl_id': tpl_id,
     'tpl_value': qs.stringify(tpl_value),
@@ -17,13 +25,3 @@ YunPianAPI.prototype.SendTplSMS = function (mobile, tpl_id, tpl_value, callback)
   });
 }
 
-export default function YunPianAPI(apikey) {
-  this.apikey = apikey;
-}
-
-var setting = Meteor.settings.public.yunpian;
-if (setting) {
-  YunPianAPI = new YunPianAPI(setting.apikey);
-} else {
-  console.log('error', 'Please Add yunpian setting.');
-}
